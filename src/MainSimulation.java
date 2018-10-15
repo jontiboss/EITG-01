@@ -1,19 +1,19 @@
 import java.util.*;
 import java.io.*;
 
-//Denna klass ärver Global så att man kan anända time och signalnamnen utan punktnotation
+//Denna klass Ã¤rver Global sÃ¥ att man kan anÃ¤nda time och signalnamnen utan punktnotation
 
 
 public class MainSimulation extends Global{
 	
     public static void main(String[] args) throws IOException {
 
-    	//Signallistan startas och actSignal deklareras. actSignal är den senast utplockade signalen i huvudloopen nedan.
+    	//Signallistan startas och actSignal deklareras. actSignal Ã¤r den senast utplockade signalen i huvudloopen nedan.
 
     	Signal actSignal;
     	new SignalList();
 		int nextPackageTo = 1;
-    	//Här nedan skapas de processinstanser som behövs och parametrar i dem ges värden.
+    	//HÃ¤r nedan skapas de processinstanser som behÃ¶vs och parametrar i dem ges vÃ¤rden.
 	
 		QS Q1 = new QS();
 		QS Q2 = new QS();
@@ -30,25 +30,25 @@ public class MainSimulation extends Global{
 
     	Gen Generator = new Gen();
     	Generator.lambda = 8; //Generator ska generera nio kunder per sekund
-    	Generator.sendTo = Q1; //De genererade kunderna ska skickas till kösystemet QS
+    	Generator.sendTo = Q1; //De genererade kunderna ska skickas till kÃ¶systemet QS
 
-    	//Här nedan skickas de första signalerna för att simuleringen ska komma igång.
+    	//HÃ¤r nedan skickas de fÃ¶rsta signalerna fÃ¶r att simuleringen ska komma igÃ¥ng.
 
     	SignalList.SendSignal(READY, Generator, time);
     	SignalList.SendSignal(MEASURE, Q1, time);
-		SignalList.SendSignal(MEASURE, Q1, time);
+	SignalList.SendSignal(MEASURE, Q1, time);
     	SignalList.SendSignal(MEASURE, Q2, time);
     	SignalList.SendSignal(MEASURE, Q3, time);
     	SignalList.SendSignal(MEASURE, Q4, time);
     	SignalList.SendSignal(MEASURE, Q5, time);
 
-    	// Detta är simuleringsloopen:
+    	// Detta Ã¤r simuleringsloopen:
 
     	while (time < 100000){
     		actSignal = SignalList.FetchSignal();
     		time = actSignal.arrivalTime;
 			actSignal.destination.TreatSignal(actSignal);
-			// om signalen Ã¤r en arrival signal så skall signalen skickas vidare till lämpligt kösystem beroende på vilken algoritm som används
+			// om signalen ÃƒÂ¤r en arrival signal sÃ¥ skall signalen skickas vidare till lÃ¤mpligt kÃ¶system beroende pÃ¥ vilken algoritm som anvÃ¤nds
 			if(actSignal.signalType == 1){
 				//MainSimulation.randQueue(Generator,Q1,Q2,Q3,Q4,Q5);
 				MainSimulation.sequenceQueue(Generator,Q1,Q2,Q3,Q4,Q5,nextPackageTo++);
@@ -58,14 +58,14 @@ public class MainSimulation extends Global{
 
     	//Slutligen skrivs resultatet av simuleringen ut nedan:
 
-    	System.out.println("Medelantal kunder i kÃ¶system: " + 1.0*Q1.accumulated/Q1.noMeasurements);
-    	System.out.println("Medelantal kunder i kÃ¶system: " + 1.0*Q2.accumulated/Q2.noMeasurements);
-    	System.out.println("Medelantal kunder i kÃ¶system: " + 1.0*Q3.accumulated/Q3.noMeasurements);
-    	System.out.println("Medelantal kunder i kÃ¶system: " + 1.0*Q4.accumulated/Q4.noMeasurements);
-    	System.out.println("Medelantal kunder i kÃ¶system: " + 1.0*Q5.accumulated/Q5.noMeasurements);
+    	System.out.println("Medelantal kunder i kÃƒÂ¶system: " + 1.0*Q1.accumulated/Q1.noMeasurements);
+    	System.out.println("Medelantal kunder i kÃƒÂ¶system: " + 1.0*Q2.accumulated/Q2.noMeasurements);
+    	System.out.println("Medelantal kunder i kÃƒÂ¶system: " + 1.0*Q3.accumulated/Q3.noMeasurements);
+    	System.out.println("Medelantal kunder i kÃƒÂ¶system: " + 1.0*Q4.accumulated/Q4.noMeasurements);
+    	System.out.println("Medelantal kunder i kÃƒÂ¶system: " + 1.0*Q5.accumulated/Q5.noMeasurements);
     
 	}
-	// väljer kö slumpmässigt
+	// vÃ¤ljer kÃ¶ slumpmÃ¤ssigt
 	public static void randQueue(Gen Generator,QS Q1,QS Q2,QS Q3,QS Q4,QS Q5){
 		Random rand = new Random();
 		switch (rand.nextInt(5)) {
@@ -83,7 +83,7 @@ public class MainSimulation extends Global{
         }
 	   
 	}
-	//skickar packeten i en sekvens från 1-5
+	//skickar packeten i en sekvens frÃ¥n 1-5
 	public static  void sequenceQueue(Gen Generator,QS Q1,QS Q2,QS Q3,QS Q4,QS Q5,int sendPackageTo){
 		
 	
@@ -103,11 +103,11 @@ public class MainSimulation extends Global{
 	
 	   
 	} 
-	//väljer den kö som är minst belastad
+	//vÃ¤ljer den kÃ¶ som Ã¤r minst belastad
 	public static void leastfloodedQueue(Gen Generator,QS Q1,QS Q2,QS Q3,QS Q4,QS Q5){
 		
 		
-		//undersöker vilken kö som är kortast
+		//undersÃ¶ker vilken kÃ¶ som Ã¤r kortast
 		
 		if(Q1.numberInQueue <= Q2.numberInQueue && Q1.numberInQueue <= Q3.numberInQueue && Q1.numberInQueue <= Q4.numberInQueue && Q1.numberInQueue <= Q5.numberInQueue){
 			Generator.sendTo = Q1;
