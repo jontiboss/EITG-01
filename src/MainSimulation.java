@@ -105,30 +105,25 @@ public class MainSimulation extends Global{
 	} 
 	//väljer den kö som är minst belastad
 	public static void leastfloodedQueue(Gen Generator,QS Q1,QS Q2,QS Q3,QS Q4,QS Q5){
+		QS smalestQueue = Q1;
+		QS[] queues = {Q1,Q2, Q3, Q4, Q5};
+		for(int i=0;i<queues.length;i++) {
+
+			if(smalestQueue.numberInQueue>queues[i].numberInQueue) {
+				
+				smalestQueue=queues[i];
+				
+			}
+			Generator.sendTo = smalestQueue;
+		}
 		
-		
-		//undersöker vilken kö som är kortast
-		
-		if(Q1.numberInQueue <= Q2.numberInQueue && Q1.numberInQueue <= Q3.numberInQueue && Q1.numberInQueue <= Q4.numberInQueue && Q1.numberInQueue <= Q5.numberInQueue){
-			Generator.sendTo = Q1;
-		}
-		else if(Q2.numberInQueue <= Q1.numberInQueue && Q2.numberInQueue <= Q3.numberInQueue && Q2.numberInQueue <= Q2.numberInQueue && Q2.numberInQueue <= Q5.numberInQueue){
-			Generator.sendTo = Q2;
-		}
-		else if(Q3.numberInQueue <= Q2.numberInQueue && Q3.numberInQueue <= Q2.numberInQueue && Q3.numberInQueue <= Q4.numberInQueue && Q3.numberInQueue <= Q5.numberInQueue){
-			Generator.sendTo = Q3;
-		}
-		else if(Q4.numberInQueue <= Q2.numberInQueue && Q4.numberInQueue <= Q3.numberInQueue && Q4.numberInQueue <= Q1.numberInQueue && Q4.numberInQueue <= Q5.numberInQueue){
-			Generator.sendTo = Q4;
-		}
-		else if(Q5.numberInQueue <= Q2.numberInQueue && Q5.numberInQueue <= Q3.numberInQueue && Q5.numberInQueue <= Q4.numberInQueue && Q5.numberInQueue <= Q1.numberInQueue){
-			Generator.sendTo = Q5;
-		}
+    }
 	
-	}
 	
 	   
 }
+
+
 
 
 	
